@@ -23,8 +23,6 @@ def isValidExtra(s: str) -> bool:
 
     stack = []
 
-    special_count = 0
-
     for char in s:
         if char in mapping: 
             x = stack.pop() if stack else '#'
@@ -32,14 +30,13 @@ def isValidExtra(s: str) -> bool:
                 return False
             
         elif char == '|':
-            if special_count % 2 == 0:
-                stack.append(char)
+            # we peek into the last inserted item to the stack
+            # if the last item matches to '|' it means we can safely call the current one a closing '|'
+            if stack and stack[-1] == '|': 
+                stack.pop()
             else:
-                x = stack.pop() if stack else '#'
-                if x != '|':
-                    return False
-            special_count += 1
-
+                stack.append(char)
+            
         else:
             stack.append(char)
 
