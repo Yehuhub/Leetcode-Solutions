@@ -52,3 +52,22 @@ class Solution:
             return
 
         self.find(root.right)
+
+
+
+# naive approach, very simple, in order traversal and get the k item from the begining
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        res = []
+
+        def dfs(root):
+            if not root:
+                return
+
+            dfs(root.left)
+            res.append(root.val)
+            dfs(root.right)
+
+        dfs(root)
+        
+        return res[k - 1]
