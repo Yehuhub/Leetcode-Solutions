@@ -24,3 +24,26 @@ class Solution:
                 heapq.heappush(heap, -task[0])
             
         return time
+    
+
+# this a faster solution O(n)
+# the idea here is that the max task sets how many idles we have.
+# then we can reduce by the occurences of the other tasks.
+# whats important here is the min in the for loop, it basically says, if the occurences of a task are
+# less than the empty spaces we have you can just reduce them, otherwise it means we dont have enough empty spaces,
+# so we can only reduce the empty space the max val has
+# this solution is less intuitive
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        char_map = [0] * 26
+
+        for task in tasks:
+            char_map[ord(task) - ord('A')] += 1
+
+        char_map.sort(reverse=True)
+        max_val = char_map[0] - 1
+        idle_count = (max_val) * n
+        for i in range(1, 26):
+            idle_count -= min(char_map[i], max_val)
+
+        return idle_count + len(tasks) if idle_count > 0 else len(tasks)
