@@ -1,7 +1,6 @@
 """
 dp solution
 idea here is that we either take the best value we picked last or the current value+last avaialable house
-
 """
 
 class Solution:
